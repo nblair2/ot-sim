@@ -16,11 +16,12 @@ class OpenDSSFederate(HelicsFederate):
     HelicsFederate.end_time   = 3600
 
     HelicsFederate.publications = [
-        Publication("line-650632.kW",          DataType.double),
-        Publication("line-650632.kVAR",        DataType.double),
-        Publication("line-650632.kVA",         DataType.complex),
-        Publication("line-650632.closed",      DataType.boolean),
-        Publication("switch-671692.closed",    DataType.boolean),
+        Publication("line-650632.kW",            DataType.double),
+        Publication("line-650632.kVAR",          DataType.double),
+        Publication("line-650632.kVA",           DataType.complex),
+        Publication("line-650632.closed",        DataType.boolean),
+        Publication("switch-671692.closed",      DataType.boolean),
+        Publication("bus-632.voltage_magnitude", DataType.vector),
     ]
 
 #   HelicsFederate.subscriptions = [
@@ -106,6 +107,12 @@ class OpenDSSFederate(HelicsFederate):
                 if field == 'voltage':
                     # Voltage magnitude
                     data[topic] = dss.Bus.puVmagAngle()[0]
+                    continue
+                if field == 'voltage_magnitude':
+                    # 3-phase voltage magnitudes as a HELICS vector
+                    nodes = dss.Bus.NumNodes()
+                    pu    = dss.Bus.puVmagAngle()
+                    data[topic] = list(pu[0:2*nodes:2])
                     continue
                 if field == 'kV':
                     data[topic] = complex(dss.Bus.Voltages()[0], dss.Bus.Voltages()[1])

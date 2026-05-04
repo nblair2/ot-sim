@@ -44,6 +44,12 @@
       <type>boolean</type>
       <tag>switch-671692.closed</tag>
     </subscription>
+    <subscription>
+      <key>OpenDSS/bus-632.voltage_magnitude</key>
+      <type>vector</type>
+      <tag>bus-632.voltage_magnitude</tag>
+      <elements>a,b,c</elements>
+    </subscription>
     <endpoint name="OpenDSS/updates">
       <tag key="line-650632.closed">line-650632.closed</tag>
     </endpoint>
